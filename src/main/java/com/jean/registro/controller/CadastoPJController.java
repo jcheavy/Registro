@@ -2,6 +2,8 @@ package com.jean.registro.controller;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jean.registro.dtos.CadastroPJDTO;
 import com.jean.registro.entities.Empresa;
@@ -20,7 +25,8 @@ import com.jean.registro.services.EmpresaService;
 import com.jean.registro.services.FuncionarioService;
 
 @Controller
-@RequestMapping("/cadastrar-pj")
+@RequestMapping("/cadastrarpj")
+@CrossOrigin(origins = "*")
 public class CadastoPJController {
 
 	private static final Logger log = LoggerFactory.getLogger(CadastoPJController.class);
@@ -43,7 +49,8 @@ public class CadastoPJController {
 	 * @return ResponseEntity<Response<CadastroPJDto>>
 	 * @throws NoSuchAlgorithmException
 	 */
-	 public ResponseEntity<Response<CadastroPJDTO>> cadastrar (CadastroPJDTO cadastroPJDto, BindingResult result) throws NoSuchAlgorithmException{
+	@RequestMapping(method = RequestMethod.POST)
+	 public ResponseEntity<Response<CadastroPJDTO>> cadastrar (@Valid @RequestBody CadastroPJDTO cadastroPJDto, BindingResult result) throws NoSuchAlgorithmException{
 		 
 		 log.info("Cadastrando Pessoa Juridica {}", cadastroPJDto.toString());
 		 Response<CadastroPJDTO> response = new Response<CadastroPJDTO>();

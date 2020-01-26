@@ -2,8 +2,11 @@ package com.jean.registro.services;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.jean.registro.entities.Funcionario;
 
+@Service
 public interface FuncionarioService {
    
 	/**

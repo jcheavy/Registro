@@ -112,12 +112,9 @@ public class CadastroPJDTO {
 
 	@Override
 	public String toString() {
-		return "CadastroPJDTO [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", cpf=" + cpf + ", razaoSocial=" + razaoSocial
-				+ ", cnpj=" + cnpj + "]";
-	}
-
-	
-	
+		return "CadastroPJDTO [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", cpf=" + cpf
+				+ ", razaoSocial=" + razaoSocial + ", cnpj=" + cnpj + "]";
+	}  	
 	
 
 }
