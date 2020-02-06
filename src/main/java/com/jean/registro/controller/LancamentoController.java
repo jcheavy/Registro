@@ -16,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jean.registro.dtos.LancamentoDto;
@@ -34,8 +36,13 @@ import com.jean.registro.response.Response;
 import com.jean.registro.services.FuncionarioService;
 import com.jean.registro.services.LancamentoService;
 
-
-
+/**
+ * 
+ * @author Jean
+ *
+ */
+@Controller
+@RequestMapping("/lancamentos")
 public class LancamentoController {
 	
 	private static final Logger log = LoggerFactory.getLogger(LancamentoController.class);
@@ -55,7 +62,7 @@ public class LancamentoController {
 
 	/**
 	 * Retorna a listagem de lançamentos de um funcionário.
-	 * 
+	 * Jean-claudio
 	 * @param funcionarioId
 	 * @return ResponseEntity<Response<LancamentoDto>>
 	 */

@@ -7,7 +7,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
-
+/**
+ * 
+ * @author Jean
+ *
+ */
 public class CadastroPFDto {
 	
 	private Long id;
@@ -130,10 +134,6 @@ public class CadastroPFDto {
 				+ valoHora + ", qtdHorasTrabalhoDia=" + qtdHorasTrabalhoDia + ", qtdHorasAlmoco=" + qtdHorasAlmoco
 				+ ", cnpj=" + cnpj + "]";
 	}
-
-
-
-	
-		   
+			   
 	
 }

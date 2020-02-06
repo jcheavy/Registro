@@ -6,7 +6,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class LancamentoDto {
 	
-	
+	/**
+	 * Jean-cláudio
+	 */
 	private Optional<Long> id = Optional.empty();
 	private String data;
 	private String tipo;
