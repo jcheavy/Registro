@@ -36,7 +36,7 @@ public class LancamentoServiceImpl implements LancamentoService {
 	@Override
 	public Lancamento persistir(Lancamento lancamento) {
 		log.info("Persistindo lançamento {}", lancamento );
-		return null;
+		return this.lancamentoRepository.save(lancamento);
 	}
 
 	@Override
