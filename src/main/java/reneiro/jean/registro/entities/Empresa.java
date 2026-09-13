@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,11 +25,22 @@ public class Empresa implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
+	@Column(name = "razao_social", nullable = false)
+	@Length(min = 3, max = 100, message = "O campo Nome deve ter entre 3 e 100 caracteres")
 	private String razaoSocial;
+	
+	@Column( nullable = false)
+	@Length(min = 14, max = 14, message = "O campo CNPJ deve ter 14 caracteres")
 	private String cnpj;
+	
 	private LocalDate dataCriacao;
 	private LocalDate dataAtualizacao;
+	
+	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Funcionario> funcionarios;
 	
 	//Construtores

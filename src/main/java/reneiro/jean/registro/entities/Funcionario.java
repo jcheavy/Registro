@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.validator.constraints.Length;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,15 +36,19 @@ public class Funcionario implements Serializable {
 	private Long id;
 	
 	@Column(name = "nome", nullable = false)
+	@Length(min = 3, max = 100, message = "O campo Nome deve ter entre 3 e 100 caracteres")
 	private String nome;
 	
 	@Column(name = "email", nullable = false)
+	@Length(min = 3, max = 100, message = "O campo Email deve ter entre 3 e 100 caracteres")
 	private String email;
 	
 	@Column(name = "senha", nullable = false)
+	@Length(min = 6, max = 10, message = "O campo senha deve ter entre 8 e 10 caracteres")
 	private String senha;
 	
 	@Column(name = "cpf", nullable = false)
+	@Length(min = 13, max = 14, message = "O campo CPF deve ter entre 13 e 14 caracteres")
 	private String cpf;
 	
 	@Column(name = "valor_hora", nullable = true)
