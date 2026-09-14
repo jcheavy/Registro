@@ -3,6 +3,7 @@ package reneiro.jean.registro.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.hibernate.validator.constraints.Length;
 
@@ -23,31 +24,29 @@ import jakarta.persistence.Table;
 public class Empresa implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "razao_social", nullable = false)
 	@Length(min = 3, max = 100, message = "O campo Nome deve ter entre 3 e 100 caracteres")
 	private String razaoSocial;
-	
-	@Column( nullable = false)
+
+	@Column(nullable = false)
 	@Length(min = 14, max = 14, message = "O campo CNPJ deve ter 14 caracteres")
 	private String cnpj;
-	
+
 	private LocalDate dataCriacao;
 	private LocalDate dataAtualizacao;
-	
+
 	@OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Funcionario> funcionarios;
-	
-	//Construtores
+
+	// Construtores
 	public Empresa() {
 	}
-	
-	
+
 	public Empresa(Long id, String razaoSocial, String cnpj, LocalDate dataCriacao, LocalDate dataAtualizacao) {
 		super();
 		this.id = id;
@@ -57,10 +56,9 @@ public class Empresa implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-
-    //Getters and Setters
+	// Getters and Setters
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getId() {
 		return id;
 	}
@@ -113,18 +111,35 @@ public class Empresa implements Serializable {
 	public void setFuncionarios(List<Funcionario> funcionarios) {
 		this.funcionarios = funcionarios;
 	}
-	
+
 	@PreUpdate
-    public void preUpdate() {
-        dataAtualizacao = LocalDate.now();
-    }
-     
-    @PrePersist
-    public void prePersist() {
-        final LocalDate atual = LocalDate.now();
-        dataCriacao = atual;
-        dataAtualizacao = atual;
-    }
+	public void preUpdate() {
+		dataAtualizacao = LocalDate.now();
+	}
+
+	@PrePersist
+	public void prePersist() {
+		final LocalDate atual = LocalDate.now();
+		dataCriacao = atual;
+		dataAtualizacao = atual;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Empresa other = (Empresa) obj;
+		return Objects.equals(id, other.id);
+	}
 
 	@Override
 	public String toString() {

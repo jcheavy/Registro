@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.hibernate.validator.constraints.Length;
@@ -28,63 +29,67 @@ import reneiro.jean.registro.enums.PerfilEnum;
 @Entity
 @Table(name = "funcionario")
 public class Funcionario implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(name = "nome", nullable = false)
 	@Length(min = 3, max = 100, message = "O campo Nome deve ter entre 3 e 100 caracteres")
 	private String nome;
-	
+
 	@Column(name = "email", nullable = false)
 	@Length(min = 3, max = 100, message = "O campo Email deve ter entre 3 e 100 caracteres")
 	private String email;
-	
+
 	@Column(name = "senha", nullable = false)
 	@Length(min = 6, max = 10, message = "O campo senha deve ter entre 8 e 10 caracteres")
 	private String senha;
-	
+
 	@Column(name = "cpf", nullable = false)
 	@Length(min = 13, max = 14, message = "O campo CPF deve ter entre 13 e 14 caracteres")
 	private String cpf;
-	
+
 	@Column(name = "valor_hora", nullable = true)
 	private BigDecimal valorHora;
-	
+
 	@Column(name = "qtd_horas_trabalho_dia", nullable = true)
 	private Float qtdHorasTrabalhoDia;
-	
+
 	@Column(name = "qtd_horas_almoco", nullable = true)
 	private Float qtdHorasAlmoco;
-	
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "perfil", nullable = false)
 	private PerfilEnum perfil;
-	
+
 	@Column(name = "data_criacao", nullable = false)
 	private LocalDate dataCriacao;
-	
+
 	@Column(name = "data_atualizacao", nullable = false)
 	private LocalDate dataAtualizacao;
-	
+
+	@Column(name = "criado_por", length = 100)
+	private String criadopor;
+
+	@Column(name = "modificado_por", length = 100)
+	private String modificadopor;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Empresa empresa;
-	
+
 	@OneToMany(mappedBy = "funcionario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Lancamento> lancamentos;
 
-	//Construtores
+	// Construtores
 	public Funcionario() {
 	}
 
-	
-	
 	public Funcionario(Long id, String nome, String email, String senha, String cpf, BigDecimal valorHora,
-			Float qtdHorasTrabalhoDia, Float qtdHorasAlmoco, PerfilEnum perfil, LocalDate dataCriacao, LocalDate dataAtualizacao,
-			Empresa empresa) {
+			Float qtdHorasTrabalhoDia, Float qtdHorasAlmoco, PerfilEnum perfil, LocalDate dataCriacao,
+			LocalDate dataAtualizacao, Empresa empresa) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -100,8 +105,8 @@ public class Funcionario implements Serializable {
 		this.empresa = empresa;
 	}
 
-    //Getters and Setters
-  
+	// Getters and Setters
+
 	public Long getId() {
 		return id;
 	}
@@ -110,7 +115,6 @@ public class Funcionario implements Serializable {
 		this.id = id;
 	}
 
-	
 	public String getNome() {
 		return nome;
 	}
@@ -119,7 +123,6 @@ public class Funcionario implements Serializable {
 		this.nome = nome;
 	}
 
-	
 	public String getEmail() {
 		return email;
 	}
@@ -128,7 +131,6 @@ public class Funcionario implements Serializable {
 		this.email = email;
 	}
 
-	
 	public String getCpf() {
 		return cpf;
 	}
@@ -137,11 +139,10 @@ public class Funcionario implements Serializable {
 		this.cpf = cpf;
 	}
 
-	
 	public BigDecimal getValorHora() {
 		return valorHora;
 	}
-	
+
 	@Transient
 	public Optional<BigDecimal> getValorHoraOpt() {
 		return Optional.ofNullable(valorHora);
@@ -151,11 +152,10 @@ public class Funcionario implements Serializable {
 		this.valorHora = valorHora;
 	}
 
-	
 	public Float getQtdHorasTrabalhoDia() {
 		return qtdHorasTrabalhoDia;
 	}
-	
+
 	@Transient
 	public Optional<Float> getQtdHorasTrabalhoDiaOpt() {
 		return Optional.ofNullable(qtdHorasTrabalhoDia);
@@ -165,11 +165,10 @@ public class Funcionario implements Serializable {
 		this.qtdHorasTrabalhoDia = qtdHorasTrabalhoDia;
 	}
 
-	
 	public Float getQtdHorasAlmoco() {
 		return qtdHorasAlmoco;
 	}
-	
+
 	@Transient
 	public Optional<Float> getQtdHorasAlmocoOpt() {
 		return Optional.ofNullable(qtdHorasAlmoco);
@@ -179,7 +178,6 @@ public class Funcionario implements Serializable {
 		this.qtdHorasAlmoco = qtdHorasAlmoco;
 	}
 
-	
 	public PerfilEnum getPerfil() {
 		return perfil;
 	}
@@ -188,7 +186,6 @@ public class Funcionario implements Serializable {
 		this.perfil = perfil;
 	}
 
-	
 	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
@@ -197,7 +194,6 @@ public class Funcionario implements Serializable {
 		this.dataCriacao = dataCriacao;
 	}
 
-	
 	public LocalDate getDataAtualizacao() {
 		return dataAtualizacao;
 	}
@@ -206,16 +202,14 @@ public class Funcionario implements Serializable {
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	
 	public String getSenha() {
 		return senha;
 	}
-	
+
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
-	
 	public Empresa getEmpresa() {
 		return empresa;
 	}
@@ -224,7 +218,6 @@ public class Funcionario implements Serializable {
 		this.empresa = empresa;
 	}
 
-	
 	public List<Lancamento> getLancamentos() {
 		return lancamentos;
 	}
@@ -232,25 +225,59 @@ public class Funcionario implements Serializable {
 	public void setLancamentos(List<Lancamento> lancamentos) {
 		this.lancamentos = lancamentos;
 	}
-	
+
 	@PreUpdate
-    public void preUpdate() {
-        dataAtualizacao = LocalDate.now();
-    }
-     
-    @PrePersist
-    public void prePersist() {
-        final LocalDate atual = LocalDate.now();
-        dataCriacao = atual;
-        dataAtualizacao = atual;
-    }
+	public void preUpdate() {
+		dataAtualizacao = LocalDate.now();
+	}
+
+	@PrePersist
+	public void prePersist() {
+		final LocalDate atual = LocalDate.now();
+		dataCriacao = atual;
+		dataAtualizacao = atual;
+	}
+
+	public String getCriadopor() {
+		return criadopor;
+	}
+
+	public void setCriadopor(String criadopor) {
+		this.criadopor = criadopor;
+	}
+
+	public String getModificadopor() {
+		return modificadopor;
+	}
+
+	public void setModificadopor(String modificadopor) {
+		this.modificadopor = modificadopor;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		return Objects.equals(id, other.id);
+	}
 
 	@Override
 	public String toString() {
 		return "Funcionario [id=" + id + ", nome=" + nome + ", email=" + email + ", senha=" + senha + ", cpf=" + cpf
 				+ ", valorHora=" + valorHora + ", qtdHorasTrabalhoDia=" + qtdHorasTrabalhoDia + ", qtdHorasAlmoco="
-				+ qtdHorasAlmoco + ", perfil=" + perfil + ", dataCriacao="
-				+ dataCriacao + ", dataAtualizacao=" + dataAtualizacao + ", empresa=" + empresa + "]";
+				+ qtdHorasAlmoco + ", perfil=" + perfil + ", dataCriacao=" + dataCriacao + ", dataAtualizacao="
+				+ dataAtualizacao + ", criadopor=" + criadopor + ", modificadopor=" + modificadopor + ", empresa="
+				+ empresa + ", lancamentos=" + lancamentos + "]";
 	}
 
 }
